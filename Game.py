@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QWidget, QPushButton, QApplication, QLabel
 class Game(QWidget):
     def __init__(self):
         super().__init__()
-        self.setFixedSize(700,700)
+        self.setFixedSize(800,700)
         self.setStyleSheet('background-color:rgb(100,150,100);border:none')
 
         self.rangs = {
