@@ -1,5 +1,5 @@
 import sys
-from math import ceil, sqrt
+from math import ceil, sqrt, sin
 
 from PyQt6.QtCore import Qt, QTimer, QThread, QRect
 from PyQt6.QtGui import QColor, QFont, QImage, QPainter, QPixmap
@@ -36,7 +36,7 @@ class Game(QWidget):
 
         self.backgr = QLabel(self)
         self.backgr.setGeometry(0,0,self.width(),self.height())
-        self.backgr.setStyleSheet(f'background-color:rgba(0,0,0,10);border:none')
+        self.backgr.setStyleSheet(f'background-color:rgba(0,0,0,100);border:none')
         self.backgr.show()
 
         self.exa_text = QLabel('Press G for ReGermanth',self)
@@ -55,7 +55,7 @@ class Game(QWidget):
 
         self.backgr2 = QLabel(self)
         self.backgr2.setGeometry(0,0,self.width(),self.height())
-        self.backgr2.setStyleSheet(f'background-color:rgba(0,0,0,90);border:none')
+        self.backgr2.setStyleSheet(f'background-color:rgba(0,0,0,0);border:none')
         self.backgr2.show()
 
         self.text = QLabel('IQ \n Rank: None',self)
@@ -85,7 +85,7 @@ class Game(QWidget):
             self.exa_text2.setText(f'Press I for increase GermanPower        FapPower: {self.tap_power+1}')
             if self.IQkoef <= len(self.list_rangs_keys)-1:
                 self.rank = self.list_rangs_keys[self.IQkoef]
-            elif self.rank == self.list_rangs_keys[-1]:
+                if self.rank == self.list_rangs_keys[-1]:
                     self.limit = self.IQ
             else:
                 self.rank = self.list_rangs_keys[-1]
@@ -114,7 +114,7 @@ class Game(QWidget):
             self.IQkoef = int(0.05*sqrt(self.IQ))
             if self.IQkoef <= len(self.list_rangs_keys)-1:
                 self.rank = self.list_rangs_keys[self.IQkoef]
-            elif self.rank == self.list_rangs_keys[-1]:
+                if self.rank == self.list_rangs_keys[-1]:
                     self.limit = self.IQ
             else: self.rank = self.list_rangs_keys[-1]
             self.text.setText(f'{round(self.IQ,6)} IQ\nRank: {self.rank}')
@@ -141,12 +141,13 @@ class Game(QWidget):
     def keyPressEvent(self, a0):
         if a0.key() == Qt.Key.Key_G:
             # self.auto_click_koef += int(self.IQ)/1000
-            self.auto_click_koef += 0.055*sqrt(int(self.IQ))
+            self.auto_click_koef += 0.065*sqrt(int(self.IQ)) * 1
+            # self.auto_click_koef += self.IQ*sin(0.001*self.IQ) + self.IQ
             self.IQ = 0
 
         if a0.key() == Qt.Key.Key_I:
             # self.tap_power += int(self.IQ)/100
-            self.tap_power += 0.045*sqrt(int(self.IQ))
+            self.tap_power += 0.035*sqrt(int(self.IQ)) * 1
             self.IQ = 0
 
         if self.end is True and a0.key() == Qt.Key.Key_F:
